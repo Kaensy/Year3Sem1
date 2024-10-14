@@ -1,0 +1,14 @@
+int main(){
+	double x = 12.3, t;
+	int a=5, b=4, c;
+	double res = 0;
+	cin >> t;
+	if(t > 10){
+		res = x * a;
+	} else {
+		res = x * b;
+	}
+	c = t - a;
+	cout<<"Resultat:"<<res<<" "<<c<<"endl";
+
+}

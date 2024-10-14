@@ -1,8 +1,8 @@
-#define USE_MATH_DEFINES
-#include <cmath>
+
 #include <iostream>
 
 using namespace std;
+
 
 void CircleProperties() {
     int radius;
@@ -10,10 +10,14 @@ void CircleProperties() {
 
     cout << "r="; cin >> radius;
 
-    area = M_PI * radius * radius;
-    perimeter = 2 * M_PI  * radius;
-    cout << "area: " << area << endl;
-    cout << "perimeter: " << perimeter << endl;
+    area = 3.14 * radius * radius;
+    perimeter = 2 * 3.14  * radius;
+    cout << "area: " ;
+    cout << area ;
+    cout << endl;
+    cout << "perimeter: " ;
+    cout << perimeter ;
+    cout<< endl;
 }
 
 void gcd()
@@ -29,7 +33,9 @@ void gcd()
         else
             b = b - a;
     }
-    cout << "GCD:" << a << endl;
+    cout << "GCD:";
+    cout << a ;
+    cout << endl;
 }
 
 void numberSum() {
@@ -41,26 +47,22 @@ void numberSum() {
     index = 0;
 
     while (index < n) {
-        cout << "elems[" << index << "]=";
+        cout << "elems[" ;
+        cout << index ;
+        cout<< "]=";
         cin >> elems[index];
         sum = sum + elems[index];
         index = index + 1;
     }
 
-    cout << "SUM: " << sum << endl;
+    cout << "SUM: " ;
+    cout << sum ;
+    cout << endl;
 }
 
 
 
 int main()
 {
-    int radius;
-    double area, perimeter;
 
-    cout << "r="; cin >> radius;
-
-    area = M_PI * radius * radius;
-    perimeter = 2 * M_PI  * radius;
-    cout << "area: " << area << endl;
-    cout << "perimeter: " << perimeter << endl;
 }

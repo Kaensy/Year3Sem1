@@ -1,3 +1,0 @@
-D:/Github/Year3Sem1/LFTC/Labs/Lab1/Lab1/cmake-build-debug/CMakeFiles/Lab1.dir
-D:/Github/Year3Sem1/LFTC/Labs/Lab1/Lab1/cmake-build-debug/CMakeFiles/edit_cache.dir
-D:/Github/Year3Sem1/LFTC/Labs/Lab1/Lab1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
