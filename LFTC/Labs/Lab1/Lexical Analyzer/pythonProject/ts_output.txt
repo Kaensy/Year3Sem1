@@ -1,0 +1,11 @@
+TS :
+Symbol | Index
+--------------------
+area           | 2
+"area:"        | 7
+perim          | 3
+"r="           | 4
+radius         | 1
+2              | 6
+"perim:"       | 8
+3.14           | 5
