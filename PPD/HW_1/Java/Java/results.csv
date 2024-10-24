@@ -2,3 +2,12 @@ N=10000, M=10000
 k=5
 
 Implementation,Threads,Time (ns)
+sequential,1,2081309560
+2-vertical,2,1223335400
+2-horizontal,2,1557876380
+4-vertical,4,851861910
+4-horizontal,4,861910610
+8-vertical,8,539651040
+8-horizontal,8,541838030
+16-vertical,16,308455610
+16-horizontal,16,400709010
