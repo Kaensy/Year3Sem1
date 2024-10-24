@@ -66,3 +66,14 @@ C++
 |              |          | 4  | 1068964600 |
 |              |          | 8  | 611830200  |
 |              |          | 16 | 411341800  |
+
+
+
+In cazul Java:
+
+atât pentru dimensiuni mici ale matricei (N=M=10 sau N=M=1000), cât și pentru dimensiuni mari (N=M=10000), rezolvarea secvențială este aproximativ egală cu rezolvarea utilizând thread-uri, atât prin metoda verticală, cât și metoda orizontală, indiferent de câte thread-uri folosim.
+
+In cazul C++:
+
+atât pentru dimensiuni mici ale matricei (N=M=10 sau N=M=1000), cât și pentru dimensiuni mari (N=M=10000), diferența dintre modelul static și cel dinamic este foarte puțin semnificativă, modelul static fiind mai eficient decât cel dinamic, iar, în ambele cazuri (static și dinamic), creșterea numărului de thread-uri face și mai eficientă rezolvarea problemei.
+
