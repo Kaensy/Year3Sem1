@@ -1,0 +1,7 @@
+# ninja log v6
+1	465	7515086390545284	CMakeFiles/C__.dir/main.cpp.obj	ccb03a8f12f883a8
+22	593	7515086390755777	CMakeFiles/C__.dir/DynamicMatrices.cpp.obj	97292e445f7cfac6
+43	615	7515086390965368	CMakeFiles/C__.dir/StaticMatrices.cpp.obj	ecc606e0933343bc
+615	786	7515086396685374	C__.exe	dfb6a4e4cac97aba
+3	442	7515086853877765	CMakeFiles/C__.dir/main.cpp.obj	ccb03a8f12f883a8
+442	600	7515086858271785	C__.exe	dfb6a4e4cac97aba

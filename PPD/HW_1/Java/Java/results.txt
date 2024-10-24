@@ -1,0 +1,8 @@
+
+Results for N=1000, M=1000, k=3, p=4
+Sequential Time: 16803900 ns (16.80 ms)
+Horizontal Threading Time: 24781900 ns (24.78 ms)
+Vertical Threading Time: 18184000 ns (18.18 ms)
+Horizontal Speedup: 0.68x
+Vertical Speedup: 0.92x
+----------------------------------------
