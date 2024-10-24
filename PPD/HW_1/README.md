@@ -22,6 +22,7 @@ C++
 |             |                    | 4          | 115500 - horizontal |
 |             | Dynamic            | 4          | 261800 - vertical   |
 |             |                    | 4          | 276500 - horizontal |
+|-------------|--------------------|------------|---------------------|
 | N=M=1000 k=5  |                    |            |                     |
 |             | Static Sequential  | 1          | 1600 ns             |
 |             | Dynamic Sequential | 1          | 2000 ns             |
