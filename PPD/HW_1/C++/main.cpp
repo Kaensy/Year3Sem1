@@ -26,7 +26,7 @@ int main() {
     std::cout << "Program has started." << std::endl;
 
     runStatic();
-    // runDynamic();
+    runDynamic();
 
     return 0;
 }

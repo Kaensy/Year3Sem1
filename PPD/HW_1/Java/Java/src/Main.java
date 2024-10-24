@@ -23,7 +23,7 @@ public class Main {
 
         try {
             // Get thread count from command line
-            p = Integer.parseInt(args[0]);
+            p = Integer.parseInt(args[1]);
 
             // Read input file
             readInputFile();

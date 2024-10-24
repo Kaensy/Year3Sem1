@@ -209,7 +209,7 @@ void DynamicMatrices::run() {
 
     // => EXECUTION
     int noOfThreads = 16;
-    computeSequential();
+    //computeSequential();
     computeParallelVertical(noOfThreads);
     computeParallelHorizontal(noOfThreads);
     // => END

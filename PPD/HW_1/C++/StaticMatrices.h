@@ -18,7 +18,7 @@ private:
     static const int N = 10000;
     static const int M = 10000;
     static const int n = 5;
-    static const int p = 4;
+    static const int p = 16;
 
     // Static Matrices
     static int matrix[N][M];

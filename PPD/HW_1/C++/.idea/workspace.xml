@@ -21,77 +21,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c5171605-cc92-45d4-ac9b-7d43de245354" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/C++.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/editor.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DynamicMatrices.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DynamicMatrices.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/StaticMatrices.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/StaticMatrices.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/query/cache-v2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/query/cmakeFiles-v1" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/query/codemodel-v2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/query/toolchains-v1" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.28.1/CMakeCCompiler.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.28.1/CMakeSystem.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.28.1/CompilerIdC/CMakeCCompilerId.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.28.1/CompilerIdC/a.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.28.1/CompilerIdCXX/CMakeCXXCompilerId.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeConfigureLog.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-environment.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Java/Java/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Java/Java/.idea/material_theme_project_new.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Java/Java/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Java/Java/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Java/Java/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Java/Java/Java.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Java/Java/src/HorizontalAllocatedThreads.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Java/Java/src/InputGenerator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Java/Java/src/Sequential.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Java/Java/src/VerticalAllocatedThreads.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/.idea/material_theme_project_new.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/Java.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/generate_input.ps1" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/src/Main$ConvolutionBase.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/src/Main$ConvolutionParallelHorizontal$WorkerThread.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/src/Main$ConvolutionParallelHorizontal.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/src/Main$ConvolutionParallelVertical$WorkerThread.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/src/Main$ConvolutionParallelVertical.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/src/Main$ConvolutionSequential.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/src/Main.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/src/date.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/src/output.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/src/output_parallel_horizontal.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/src/output_parallel_vertical.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/src/output_sequential.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/src/run_tests.ps1" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/src/script_help.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/src/src/date.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/src/src/output_parallel_horizontal.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/src/src/output_parallel_vertical.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/src/src/output_sequential.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/src/src/timing_results_4threads.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/src/timing_results_N10000_M10_K5_T16.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/src/timing_results_N10000_M10_K5_T2.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/src/timing_results_N10000_M10_K5_T4.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/src/timing_results_N10000_M10_K5_T8.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/src/timing_results_N1000_K5_T16.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/src/timing_results_N1000_K5_T2.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/src/timing_results_N1000_K5_T4.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/src/timing_results_N1000_K5_T8.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/src/timing_results_N10_K3_T4.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/src/timing_results_N10_M10000_K5_T16.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/src/timing_results_N10_M10000_K5_T2.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/src/timing_results_N10_M10000_K5_T4.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/src/timing_results_N10_M10000_K5_T8.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../LFTC/Labs/Lab1/Lab1/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/../../../LFTC/Labs/Lab1/Lab1/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DynamicMatrices.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/DynamicMatrices.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StaticMatrices.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/StaticMatrices.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StaticMatrices.h" beforeDir="false" afterPath="$PROJECT_DIR$/StaticMatrices.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/C__.dir/DynamicMatrices.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/C__.dir/DynamicMatrices.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/C__.dir/StaticMatrices.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/C__.dir/StaticMatrices.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/C__.dir/main.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/C__.dir/main.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/C__.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/C__.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/Java/results.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../Java/Java/results.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/Java/scriptJ.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/../Java/Java/scriptJ.ps1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/Java/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Java/Java/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,6 +69,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "CMake Application.C__.executor": "Run",
     "RunOnceActivity.RadMigrateCodeStyle": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
@@ -132,6 +77,10 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "git-widget-placeholder": "main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
@@ -156,11 +105,16 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1729805203685</updated>
-      <workItem from="1729805205123" duration="171000" />
+      <workItem from="1729805205123" duration="4964000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VCPKGProject">
+    <isAutomaticCheckingOnLaunch value="false" />
+    <isAutomaticFoundErrors value="true" />
+    <isAutomaticReloadCMake value="true" />
   </component>
 </project>
