@@ -1,3 +1,25 @@
+Java
+
+| Tip Matrice,Nr Threads,Timp Executie |
+|--------------------------------------|
+| N=10 M=10 k=3,,                      |
+| Sequential,1,0                       |
+| 4-horizontal,4,1.4                   |
+| 4-vertical,4,0.4                     |
+
+| Tip Matrice,Nr Threads,Timp Executie |
+|--------------------------------------|
+| N=1000 M=1000 k=5,,                  |
+| Sequential,1,22.8                    |
+| 2-horizontal,2,12                    |
+| 2-vertical,2,11.2                    |
+| 4-horizontal,4,12.4                  |
+| 4-vertical,4,11                      |
+| 8-horizontal,8,12.6                  |
+| 8-vertical,8,11.3                    |
+| 16-horizontal,16,12.6                |
+| 16-vertical,16,11.1                  |
+
 | Tip matrice   | Nr Threads | Timp Executie |
 |---------------|------------|---------------|
 | N=M=10000 k=5 |            |               |
@@ -10,6 +32,33 @@
 | 8-horizontal  | 8          | 559337680     |
 | 16-vertical   | 16         | 321647010     |
 | 16-horizontal | 16         | 367366360     |
+
+| Tip Matrice,Nr Threads,Timp Executie |
+| ------------------------------------ |
+| N=10000 M=10 k=5,,                   |
+| Sequential,1,7.5                     |
+| 2-horizontal,2,32.5                  |
+| 2-vertical,2,2.8                     |
+| 4-horizontal,4,22.9                  |
+| 4-vertical,4,3.9                     |
+| 8-horizontal,8,19.6                  |
+| 8-vertical,8,3.7                     |
+| 16-horizontal,16,25.1                |
+| 16-vertical,16,3.5                   |
+
+| Tip Matrice,Nr Threads,Timp Executie |
+|--------------------------------------|
+| N=10 M=10000 k=5,,                   |
+| Sequential,1,5.2                     |
+| 2-horizontal,2,3.5                   |
+| 2-vertical,2,2                       |
+| 4-horizontal,4,3.3                   |
+| 4-vertical,4,2.6                     |
+| 8-horizontal,8,3.6                   |
+| 8-vertical,8,2.1                     |
+| 16-horizontal,16,3.2                 |
+| 16-vertical,16,2.4                   |
+
 
 
 C++
@@ -66,3 +115,14 @@ C++
 |              |          | 4  | 1068964600 |
 |              |          | 8  | 611830200  |
 |              |          | 16 | 411341800  |
+
+
+
+In cazul Java:
+
+atât pentru dimensiuni mici ale matricei (N=M=10 sau N=M=1000), cât și pentru dimensiuni mari (N=M=10000), rezolvarea secvențială este aproximativ egală cu rezolvarea utilizând thread-uri, atât prin metoda verticală, cât și metoda orizontală, indiferent de câte thread-uri folosim.
+
+In cazul C++:
+
+atât pentru dimensiuni mici ale matricei (N=M=10 sau N=M=1000), cât și pentru dimensiuni mari (N=M=10000), diferența dintre modelul static și cel dinamic este foarte puțin semnificativă, modelul static fiind mai eficient decât cel dinamic, iar, în ambele cazuri (static și dinamic), creșterea numărului de thread-uri face și mai eficientă rezolvarea problemei.
+
