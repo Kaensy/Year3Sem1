@@ -1,3 +1,4 @@
+[outJ.csv](https://github.com/user-attachments/files/17514963/outJ.csv)Java
 | Tip matrice   | Nr Threads | Timp Executie |
 |---------------|------------|---------------|
 | N=M=10000 k=5 |            |               |
@@ -10,6 +11,16 @@
 | 8-horizontal  | 8          | 559337680     |
 | 16-vertical   | 16         | 321647010     |
 | 16-horizontal | 16         | 367366360     |
+
+
+[Uploading outJ.csvTip Matrice,Nr Threads,Timp Executie
+N=10000 M=10 k=5,,
+Sequential,1,7.5
+16-horizontal,16,25.1
+16-vertical,16,3.5
+
+…]()
+
 
 
 C++
