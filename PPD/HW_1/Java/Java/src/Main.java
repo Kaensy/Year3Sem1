@@ -11,7 +11,7 @@ public class Main {
     private static int N, M, k, p;
     private static int[][] matrix;
     private static int[][] convolutionMatrix;
-    private static final String INPUT_FILE = "N10000M10000k5.txt";
+    private static final String INPUT_FILE = "N1000M1000k5.txt";
 
     public static void main(String[] args) {
 

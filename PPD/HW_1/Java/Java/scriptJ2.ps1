@@ -1,43 +1,78 @@
+# Parameters for the script
+param(
+    [int]$ThreadCount = 16,       # Default thread count
+    [int]$RunsPerTest = 5,        # Default number of runs per test
+    [string]$InputFile = "N1000M1000k5.txt"  # Default input file
+)
 
-$param1 = $args[0] # Nume fisier java
-#Write-Host $param1
+# Setup directories
+$srcDir = "src"
+$outDir = "out"
 
-$param2 = $args[1] # No of threads
-#Write-Host $param2
-
-$param3 = $args[2] # No of runs
-#Write-Host $param2
-
-<#
-$param4 = $args[3] # ?
-Write-Host $param2
-#>
-
-# Executare class Java
-
-$suma = 0
-
-for ($i = 0; $i -lt $param3; $i++){
-    Write-Host "Rulare" ($i+1)
-    $a = java $args[0] $args[1] # rulare class java
-    Write-Host $a[$a.length-1]
-    $suma += $a[$a.length-1]
-    Write-Host ""
-}
-if ($i -ne 0) {
-    $media = $suma / $i
-} else {
-    $media = 0
-}
-#Write-Host $suma
-Write-Host "Timp de executie mediu:" $media
-
-# Creare fisier .csv
-if (!(Test-Path outJ.csv)){
-    New-Item outJ.csv -ItemType File
-    #Scrie date in csv
-    Set-Content outJ.csv 'Tip Matrice,Nr threads,Timp executie'
+# Create output directory if it doesn't exist
+if (!(Test-Path $outDir)) {
+    New-Item -ItemType Directory -Path $outDir | Out-Null
 }
 
-# Append
-Add-Content outJ.csv ",$($args[1]),$($media)"
+# Clean any existing class files
+Remove-Item "$outDir\*.class" -ErrorAction SilentlyContinue
+
+# Compile Java files
+Write-Host "Compiling Java files..."
+$compileResult = javac -d $outDir "$srcDir\*.java" 2>&1
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "Error: Compilation failed!"
+    Write-Host $compileResult
+    exit 1
+}
+
+# Verify Main.class exists
+if (!(Test-Path "$outDir\Main.class")) {
+    Write-Host "Error: Main.class not found after compilation!"
+    exit 1
+}
+
+Write-Host "Running tests with $ThreadCount threads, $RunsPerTest runs per test"
+Write-Host "Using input file: $InputFile"
+Write-Host "----------------------------------------"
+
+$totalTime = 0
+
+for ($i = 1; $i -le $RunsPerTest; $i++) {
+    Write-Host "`nRun $i of $RunsPerTest"
+    
+    # Run Java with explicit class path pointing to the out directory
+    $result = java -cp $outDir Main generate $ThreadCount 2>&1
+    
+    if ($result -match "(\d+) (\d+) (\d+)") {
+        $seqTime = [double]$matches[1] / 1e6  # Convert to milliseconds
+        $vertTime = [double]$matches[2] / 1e6
+        $horTime = [double]$matches[3] / 1e6
+        
+        Write-Host "Sequential: $seqTime ms"
+        Write-Host "Vertical: $vertTime ms"
+        Write-Host "Horizontal: $horTime ms"
+        
+        $totalTime += $horTime  # Track horizontal implementation time
+    } else {
+        Write-Host "Warning: Unexpected output format from run $i"
+        Write-Host "Output: $result"
+    }
+    
+    # Add a small delay between runs
+    Start-Sleep -Milliseconds 500
+}
+
+$avgTime = $totalTime / $RunsPerTest
+
+# Create or append to CSV file
+$csvFile = "convolution_results.csv"
+if (!(Test-Path $csvFile)) {
+    "Input File,Threads,Average Time (ms)" | Out-File $csvFile
+}
+
+"$InputFile,$ThreadCount,$avgTime" | Add-Content $csvFile
+
+Write-Host "`nResults Summary:"
+Write-Host "Average execution time: $avgTime ms"
+Write-Host "Results saved in convolution_results.csv"
