@@ -1,0 +1,33 @@
+Alphabet: {+, -, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e, f, A, B, C, D, E, F, x, X}
+States: {start, dec, oct, hex, sign, zero}
+Initial: start
+Final: {dec, oct, hex, zero}
+Transitions: {
+    (start,+)->sign; (start,-)->sign;
+    (start,0)->zero;
+    (start,1)->dec; (start,2)->dec; (start,3)->dec; (start,4)->dec; (start,5)->dec;
+    (start,6)->dec; (start,7)->dec; (start,8)->dec; (start,9)->dec;
+
+    (sign,1)->dec; (sign,2)->dec; (sign,3)->dec; (sign,4)->dec; (sign,5)->dec;
+    (sign,6)->dec; (sign,7)->dec; (sign,8)->dec; (sign,9)->dec;
+
+    (zero,x)->hex; (zero,X)->hex;
+    (zero,0)->oct; (zero,1)->oct; (zero,2)->oct; (zero,3)->oct;
+    (zero,4)->oct; (zero,5)->oct; (zero,6)->oct; (zero,7)->oct;
+
+    (dec,0)->dec; (dec,1)->dec; (dec,2)->dec; (dec,3)->dec; (dec,4)->dec;
+    (dec,5)->dec; (dec,6)->dec; (dec,7)->dec; (dec,8)->dec; (dec,9)->dec;
+
+    (oct,0)->oct; (oct,1)->oct; (oct,2)->oct; (oct,3)->oct;
+    (oct,4)->oct; (oct,5)->oct; (oct,6)->oct; (oct,7)->oct;
+
+    (hex,0)->hex; (hex,1)->hex; (hex,2)->hex; (hex,3)->hex; (hex,4)->hex;
+    (hex,5)->hex; (hex,6)->hex; (hex,7)->hex; (hex,8)->hex; (hex,9)->hex;
+    (hex,a)->hex; (hex,b)->hex; (hex,c)->hex; (hex,d)->hex; (hex,e)->hex; (hex,f)->hex;
+    (hex,A)->hex; (hex,B)->hex; (hex,C)->hex; (hex,D)->hex; (hex,E)->hex; (hex,F)->hex;
+
+    (sign,0)->zero;
+
+    (start,a)->hex; (start,b)->hex; (start,c)->hex; (start,d)->hex; (start,e)->hex; (start,f)->hex;
+    (start,A)->hex; (start,B)->hex; (start,C)->hex; (start,D)->hex; (start,E)->hex; (start,F)->hex
+}

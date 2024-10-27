@@ -1,0 +1,22 @@
+finite_automaton = alphabet states initial_state final_states transitions
+
+alphabet = "Alphabet:" whitespace "{" symbol_list "}"
+symbol_list = symbol {"," whitespace symbol}
+symbol = letter | digit | special_char
+letter = "A" | ... | "Z" | "a" | ... | "z"
+digit = "0" | ... | "9"
+special_char = "+" | "-"
+
+states = "States:" whitespace "{" state_list "}"
+state_list = state {"," whitespace state}
+state = letter {letter | digit}
+
+initial_state = "Initial:" whitespace state
+
+final_states = "Final:" whitespace "{" state_list "}"
+
+transitions = "Transitions:" whitespace "{" transition_list "}"
+transition_list = transition {";" whitespace transition}
+transition = "(" state "," symbol ")" whitespace "->" whitespace state
+
+whitespace = " " | "\t" | "\n"
