@@ -71,7 +71,7 @@ class LexicalAnalyzer:
             with open(file_path, 'r') as file:
                 for line_number, line in enumerate(file, 1):
                     line = line.strip()
-                    if not line or line.startswith('#'):  # Skip empty lines and comments
+                    if not line or line.startswith('#'):
                         continue
                     parts = line.split()
                     if len(parts) != 2:
@@ -168,19 +168,18 @@ class LexicalAnalyzer:
         if not self.current_line_tokens[-1] == ';':
             self.errors.append(f"Error on line {self.line_number}: Missing semicolon in declaration")
 
-        # Check for valid declaration format
         if len(self.current_line_tokens) < 3:
             self.errors.append(f"Error on line {self.line_number}: Invalid declaration format")
             return
 
         type_token = self.current_line_tokens[0]
-        identifiers = self.current_line_tokens[1:-1]  # Exclude type and semicolon
+        identifiers = self.current_line_tokens[1:-1]
 
         for i, token in enumerate(identifiers):
-            if i % 2 == 0:  # Should be an identifier
+            if i % 2 == 0:
                 if not self.is_identifier(token):
                     self.errors.append(f"Error on line {self.line_number}: Invalid identifier '{token}' in declaration")
-            else:  # Should be a comma
+            else:
                 if token != ',':
                     self.errors.append(
                         f"Error on line {self.line_number}: Expected ',' between identifiers in declaration")
@@ -275,7 +274,6 @@ class LexicalAnalyzer:
                 f.write(f"{symbol:<15}| {index}\n")
 
 
-# Usage
 analyzer = LexicalAnalyzer('atoms_id.txt')
 analyzer.analyze('input_program.txt')
 analyzer.report_errors()
