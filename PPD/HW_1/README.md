@@ -1,10 +1,5 @@
 Java
 
-| Matrix Size | Threads | Avg Sequential Time (ns) | Avg Parallel Time (ns) |
-|---------------------------------------------------------------------------|
-| 10x10       | 2       | 117850                   | 1700830                |
-
-
 | Tip Matrice,Nr Threads,Timp Executie |
 |--------------------------------------|
 | N=10 M=10 k=3,,                      |
