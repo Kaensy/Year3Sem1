@@ -1,0 +1,3 @@
+Matrix Size | Threads | Avg Sequential Time (ns) | Avg Parallel Time (ns)
+10000x10000 | 4 | 0 | 0
+10000x10000 | 4 | 0 | 0
