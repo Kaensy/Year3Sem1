@@ -133,7 +133,6 @@ class MatrixConvolution {
         long startTime = System.nanoTime();
         List<Thread> threads = new ArrayList<>();
 
-        // Make sure we don't divide by zero
         if (p <= 0) {
             throw new IllegalArgumentException("Number of threads must be greater than 0");
         }

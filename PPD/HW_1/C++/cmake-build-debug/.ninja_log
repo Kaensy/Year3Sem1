@@ -1,23 +1,5 @@
-# ninja log v6
-7	444	7515151474176942	CMakeFiles/C__.dir/main.cpp.obj	ccb03a8f12f883a8
-27	569	7515151474376937	CMakeFiles/C__.dir/DynamicMatrices.cpp.obj	97292e445f7cfac6
-48	590	7515151474586918	CMakeFiles/C__.dir/StaticMatrices.cpp.obj	ecc606e0933343bc
-590	743	7515151480016938	C__.exe	dfb6a4e4cac97aba
-8	527	7515151810318877	CMakeFiles/C__.dir/StaticMatrices.cpp.obj	ecc606e0933343bc
-527	672	7515151815507339	C__.exe	dfb6a4e4cac97aba
-8	461	7515152110491699	CMakeFiles/C__.dir/main.cpp.obj	ccb03a8f12f883a8
-29	576	7515152110691682	CMakeFiles/C__.dir/DynamicMatrices.cpp.obj	97292e445f7cfac6
-49	599	7515152110890530	CMakeFiles/C__.dir/StaticMatrices.cpp.obj	ecc606e0933343bc
-600	747	7515152116405451	C__.exe	dfb6a4e4cac97aba
-7	438	7515152606599295	CMakeFiles/C__.dir/main.cpp.obj	ccb03a8f12f883a8
-31	561	7515152606839296	CMakeFiles/C__.dir/DynamicMatrices.cpp.obj	97292e445f7cfac6
-52	594	7515152607052222	CMakeFiles/C__.dir/StaticMatrices.cpp.obj	ecc606e0933343bc
-594	745	7515152612462227	C__.exe	dfb6a4e4cac97aba
-7	425	7515152903686138	CMakeFiles/C__.dir/main.cpp.obj	ccb03a8f12f883a8
-28	562	7515152903896115	CMakeFiles/C__.dir/DynamicMatrices.cpp.obj	97292e445f7cfac6
-50	579	7515152904116122	CMakeFiles/C__.dir/StaticMatrices.cpp.obj	ecc606e0933343bc
-579	729	7515152909406120	C__.exe	dfb6a4e4cac97aba
+# ninja log v5
 3	509	7515153192969736	CMakeFiles/C__.dir/main.cpp.obj	ccb03a8f12f883a8
-50	616	7515153193439742	CMakeFiles/C__.dir/StaticMatrices.cpp.obj	ecc606e0933343bc
 27	637	7515153193209740	CMakeFiles/C__.dir/DynamicMatrices.cpp.obj	97292e445f7cfac6
+50	616	7515153193439742	CMakeFiles/C__.dir/StaticMatrices.cpp.obj	ecc606e0933343bc
 637	795	7515153199304828	C__.exe	dfb6a4e4cac97aba
