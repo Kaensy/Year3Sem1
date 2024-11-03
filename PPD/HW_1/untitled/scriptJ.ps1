@@ -3,7 +3,7 @@ $param2 = $args[1] # Input file (N10M10k3)
 $param3 = $args[2] # No of threads
 $param4 = $args[3] # No of runs
 
-$javaPath = "C:\Program Files\jdk-21.0.5+11\bin\java.exe"
+# $javaPath = "C:\Program Files\jdk-21.0.5+11\bin\java.exe"
 $classPath = ".\out\production\untitled"
 
 # Function to get matrix dimensions from filename
@@ -25,7 +25,7 @@ $vertTimes = @()
 
 for ($i = 0; $i -lt $param4; $i++){
     Write-Host "Rulare" ($i+1)
-    $output = & $javaPath -cp $classPath Main $param2 $param3
+    # $output = & $javaPath -cp $classPath Main $param2 $param3
     
     foreach ($line in $output) {
         if ($line -match "Sequential:(\d+)") {
