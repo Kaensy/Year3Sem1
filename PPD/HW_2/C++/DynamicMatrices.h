@@ -7,6 +7,8 @@
 #include <thread>
 #include <vector>
 #include <string>
+#include <barrier>
+#include <mutex>
 
 class DynamicMatrices {
 private:
@@ -15,12 +17,12 @@ private:
     std::string inputFileName;
     int** matrix;
     int** kernel;
-
+    std::mutex mtx;
 
     void allocateMatrices();
     void deallocateMatrices();
     void readMatrices();
-    void processRowRange(int startRow, int endRow);
+    void processRowRange(int startRow, int endRow, std::barrier<>& startBarrier, std::barrier<>& endBarrier);
     void computeSequential();
     void computeParallel(int numThreads);
     void writeResult(const std::string& filename);
