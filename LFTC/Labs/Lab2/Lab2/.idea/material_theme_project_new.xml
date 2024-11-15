@@ -5,8 +5,12 @@
       <MTProjectMetadataState>
         <option name="migrated" value="true" />
         <option name="pristineConfig" value="false" />
+<<<<<<< HEAD
         <option name="userId" value="46e2a98a:18e17bc1111:-8000" />
         <option name="version" value="8.12.6" />
+=======
+        <option name="userId" value="126db69e:192a637ad36:-7ffe" />
+>>>>>>> 90b069535b61d083a3cd1f0f969245b53045c7fb
       </MTProjectMetadataState>
     </option>
   </component>

@@ -1,0 +1,14 @@
+int main ( )
+{
+	int radius ;
+	double area , perim ;
+	int @something;
+	something something;
+	; ;
+	cout << "r=" ;
+	cin >> radius ;
+	area = 3.14.15 * radius * radius ;
+	perim = 2 * 3.14  * radius ;
+	cout << "area:" << area << endl ;
+	cout << \ ;
+	cout << "perim:" << perim << endl ;
