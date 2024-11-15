@@ -277,9 +277,9 @@ class FiniteAutomaton:
             return "", [], f"Cannot check sequence: {message}"
 
         # Verify if all symbols in sequence are in the alphabet
-        invalid_symbols = [symbol for symbol in sequence if symbol not in self.alphabet]
-        if invalid_symbols:
-            return "", [], f"Sequence contains invalid symbols: {invalid_symbols}"
+        # invalid_symbols = [symbol for symbol in sequence if symbol not in self.alphabet]
+        # if invalid_symbols:
+        #     return "", [], f"Sequence contains invalid symbols: {invalid_symbols}"
 
         current_state = self.initial_state
         trace = []

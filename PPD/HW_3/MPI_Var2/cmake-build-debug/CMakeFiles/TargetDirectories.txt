@@ -1,0 +1,3 @@
+D:/Github/Year3Sem1/PPD/HW_3/MPI_Var2/cmake-build-debug/CMakeFiles/MPI_Var2.dir
+D:/Github/Year3Sem1/PPD/HW_3/MPI_Var2/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/Github/Year3Sem1/PPD/HW_3/MPI_Var2/cmake-build-debug/CMakeFiles/rebuild_cache.dir

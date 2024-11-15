@@ -1,0 +1,3 @@
+D:/Github/Year3Sem1/PPD/HW_3/Mpi/cmake-build-debug/CMakeFiles/Mpi.dir
+D:/Github/Year3Sem1/PPD/HW_3/Mpi/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/Github/Year3Sem1/PPD/HW_3/Mpi/cmake-build-debug/CMakeFiles/rebuild_cache.dir
