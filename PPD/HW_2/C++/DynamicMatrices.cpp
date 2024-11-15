@@ -65,11 +65,14 @@ void DynamicMatrices::readMatrices() {
     }
 }
 
-void DynamicMatrices::processRowRange(int startRow, int endRow) {
+void DynamicMatrices::processRowRange(int startRow, int endRow, std::barrier<>& startBarrier, std::barrier<>& endBarrier) {
     std::vector<int> cacheRow(M);
     std::vector<int> resultRow(M);
 
     for (int i = startRow; i < endRow; i++) {
+        // Wait for all threads to be ready
+        startBarrier.arrive_and_wait();
+
         // Cache current row
         for (int j = 0; j < M; j++) {
             cacheRow[j] = matrix[i][j];
@@ -77,7 +80,7 @@ void DynamicMatrices::processRowRange(int startRow, int endRow) {
 
         // Process each element
         for (int j = 0; j < M; j++) {
-            int sum = 0;  // Use int for intermediate sums
+            int sum = 0;
             for (int ki = -1; ki <= 1; ki++) {
                 for (int kj = -1; kj <= 1; kj++) {
                     int row = i + ki;
@@ -97,18 +100,28 @@ void DynamicMatrices::processRowRange(int startRow, int endRow) {
             resultRow[j] = sum;
         }
 
+        // Wait for all threads to finish calculations
+        endBarrier.arrive_and_wait();
+
         // Update the matrix with computed results
         for (int j = 0; j < M; j++) {
             matrix[i][j] = resultRow[j];
         }
+
+        // Wait for all threads to finish updating
+        startBarrier.arrive_and_wait();
     }
 }
 
 void DynamicMatrices::computeParallel(int numThreads) {
-    // Ensure each thread processes complete rows
+    // Calculate work distribution
     int rowsPerThread = N / numThreads;
     int remainingRows = N % numThreads;
     int startRow = 0;
+
+    // Create barriers for synchronization
+    std::barrier startBarrier(numThreads);
+    std::barrier endBarrier(numThreads);
 
     std::vector<std::thread> threads;
     threads.reserve(numThreads);
@@ -116,7 +129,12 @@ void DynamicMatrices::computeParallel(int numThreads) {
     for (int i = 0; i < numThreads; i++) {
         int threadRows = rowsPerThread + (i < remainingRows ? 1 : 0);
         if (threadRows > 0) {
-            threads.emplace_back(&DynamicMatrices::processRowRange, this, startRow, startRow + threadRows);
+            threads.emplace_back(&DynamicMatrices::processRowRange,
+                                 this,
+                                 startRow,
+                                 startRow + threadRows,
+                                 std::ref(startBarrier),
+                                 std::ref(endBarrier));
         }
         startRow += threadRows;
     }
@@ -191,6 +209,7 @@ void DynamicMatrices::run(int numThreads) {
         std::cout << "Sequential execution time: " << seqDuration.count() << "ms\n";
         seq_time = seqDuration.count();
 
+        // Reset matrix to original state
         readMatrices();
 
         std::cout << "Parallel execution with " << numThreads << " threads...\n";
@@ -203,9 +222,6 @@ void DynamicMatrices::run(int numThreads) {
         std::cout << "Speedup: " << (double)seqDuration.count() / parDuration.count() << "x\n";
         par_time = parDuration.count();
 
-        // std::cout << "\nComparing outputs:\n";
-        // bool areEqual = compareOutputFiles("output_sequential.txt", "output_parallel.txt");
-        // std::cout << (areEqual ? "Files are identical\n" : "Files differ\n");
     } catch (const std::exception& e) {
         std::cerr << "Error during execution: " << e.what() << std::endl;
         throw;

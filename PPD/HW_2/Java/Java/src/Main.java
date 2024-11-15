@@ -1,16 +1,16 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.BrokenBarrierException;
 
 class MatrixConvolution {
     private int[][] inputMatrix;
     private int[][] convolutionMatrix;
     private int n, m, k;
-    private int[] tempRow;  // Temporary array for storing a row's original values
 
     public MatrixConvolution(String inputFile, Integer overrideThreadCount) {
         readFromFile(inputFile, overrideThreadCount);
-        tempRow = new int[m];  // O(n) space complexity where n >= m
     }
 
     private void readFromFile(String filename, Integer overrideThreadCount) {
@@ -65,18 +65,12 @@ class MatrixConvolution {
         }
     }
 
-    private int getExtendedValue(int row, int col, int[] rowCache, int currentRow) {
+    private int getExtendedValue(int row, int col) {
         // Handle border cases by extending edge values
         if (row < 0) row = 0;
         if (row >= n) row = n - 1;
         if (col < 0) col = 0;
         if (col >= m) col = m - 1;
-
-        // If accessing current row being processed, use cached values
-        if (row == currentRow) {
-            return rowCache[col];
-        }
-
         return inputMatrix[row][col];
     }
 
@@ -89,7 +83,15 @@ class MatrixConvolution {
                 int pixelRow = row - offset + i;
                 int pixelCol = col - offset + j;
 
-                int pixelValue = getExtendedValue(pixelRow, pixelCol, rowCache, row);
+                int pixelValue;
+                if (pixelRow == row) {
+                    // Use cached values for current row
+                    pixelValue = rowCache[Math.min(Math.max(pixelCol, 0), m - 1)];
+                } else {
+                    // Use matrix values for other rows
+                    pixelValue = getExtendedValue(pixelRow, pixelCol);
+                }
+
                 sum += pixelValue * convolutionMatrix[i][j];
             }
         }
@@ -98,6 +100,7 @@ class MatrixConvolution {
 
     public long sequentialConvolution() {
         long startTime = System.nanoTime();
+        int[] tempRow = new int[m];
 
         for (int i = 0; i < n; i++) {
             // Cache the current row
@@ -115,28 +118,49 @@ class MatrixConvolution {
     public long horizontalParallelConvolution(int numThreads) throws InterruptedException {
         long startTime = System.nanoTime();
         List<Thread> threads = new ArrayList<>();
+        int[] tempResults = new int[m]; // Temporary array for row results
 
-        // Calculate chunk size for better load balancing
-        int chunkSize = (n + numThreads - 1) / numThreads;  // Ceiling division
+        // Calculate rows per thread
+        int chunkSize = (n + numThreads - 1) / numThreads;
+
+        // Create barriers for synchronization
+        CyclicBarrier startBarrier = new CyclicBarrier(numThreads);
+        CyclicBarrier endBarrier = new CyclicBarrier(numThreads);
 
         for (int i = 0; i < numThreads; i++) {
+            final int threadId = i;
             final int startRow = i * chunkSize;
             final int endRow = Math.min(startRow + chunkSize, n);
 
-            if (startRow >= n) break;  // Skip creating unnecessary threads
+            if (startRow >= n) break;
 
             Thread thread = new Thread(() -> {
-                // Each thread gets its own temporary row array
-                int[] threadTempRow = new int[m];
+                int[] threadTempRow = new int[m]; // Each thread has its own temp row
 
-                for (int row = startRow; row < endRow; row++) {
-                    // Cache the current row
-                    System.arraycopy(inputMatrix[row], 0, threadTempRow, 0, m);
+                try {
+                    for (int row = startRow; row < endRow; row++) {
+                        // Wait for all threads to be ready to process their rows
+                        startBarrier.await();
 
-                    // Process the row
-                    for (int col = 0; col < m; col++) {
-                        inputMatrix[row][col] = applyConvolution(row, col, threadTempRow);
+                        // Cache the current row
+                        System.arraycopy(inputMatrix[row], 0, threadTempRow, 0, m);
+
+                        // Calculate new values for the row
+                        for (int col = 0; col < m; col++) {
+                            threadTempRow[col] = applyConvolution(row, col, threadTempRow);
+                        }
+
+                        // Wait for all threads to finish calculations
+                        endBarrier.await();
+
+                        // Update the row in the matrix
+                        System.arraycopy(threadTempRow, 0, inputMatrix[row], 0, m);
+
+                        // Wait for all threads to finish updating
+                        startBarrier.await();
                     }
+                } catch (InterruptedException | BrokenBarrierException e) {
+                    e.printStackTrace();
                 }
             });
 
