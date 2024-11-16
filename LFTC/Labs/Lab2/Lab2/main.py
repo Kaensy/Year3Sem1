@@ -348,7 +348,7 @@ def main():
     fa = FiniteAutomaton()
     while True:
         display_menu()
-        choice = input("\nEnter your choice (0-8): ").strip()
+        choice = input("\nEnter your choice (0-11): ").strip()
 
         if choice == '0':
             print("Exiting program...")
