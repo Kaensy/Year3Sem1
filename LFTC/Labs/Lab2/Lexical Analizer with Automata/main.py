@@ -112,40 +112,8 @@ class LexicalAnalyzer:
         self.integer_fa = self._create_integer_automaton()
         self.real_fa = self._create_real_number_automaton()
 
-        # Hardcoded atoms dictionary with predefined codes
+
         self.atoms_dict = {
-            "ID": 0,
-            "CONST": 1,
-            "int": 2,
-            "double": 3,
-            "void": 4,
-            "main": 5,
-            "cout": 6,
-            "cin": 7,
-            "while": 8,
-            "if": 9,
-            "else": 10,
-            "endl": 11,
-            "+": 12,
-            "-": 13,
-            "*": 14,
-            "<<": 15,
-            ">>": 16,
-            "=": 17,
-            "!=": 18,
-            ">": 19,
-            "<": 20,
-            "<=": 21,
-            ">=": 22,
-            "==": 23,
-            "[": 24,
-            "]": 25,
-            "(": 26,
-            ")": 27,
-            "{": 28,
-            "}": 29,
-            ",": 30,
-            ";": 31
         }
 
         # Categorize tokens
@@ -180,7 +148,6 @@ class LexicalAnalyzer:
 
     def _create_integer_automaton(self) -> FiniteAutomaton:
         """
-        Based on C++17 Standard (ISO/IEC 14882:2017) Section 5.13.2
         Integer literals can be:
         - Decimal: A non-zero decimal digit (1-9), followed by zero or more decimal digits (0-9)
         - Zero by itself
@@ -365,7 +332,6 @@ class LexicalAnalyzer:
         return tokens
 
     def classify_token(self, token: str) -> Tuple[str, int, str]:
-        # Remove regex-based checks and use finite automata
 
         # Check keywords (exact match)
         if token in self.keywords:
