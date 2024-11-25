@@ -1,0 +1,10 @@
+Symbol         | Index
+--------------------
+radius         | 1
+area           | 2
+perim          | 3
+"r="           | 4
+3.14           | 5
+2              | 6
+"area:"        | 7
+"perim:"       | 8
