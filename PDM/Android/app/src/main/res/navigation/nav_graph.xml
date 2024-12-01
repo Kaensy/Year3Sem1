@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="pdm.application.ui.login.LoginFragment"
+        android:label="Login">
+        <action
+            android:id="@+id/action_login_to_tournamentList"
+            app:destination="@id/tournamentListFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/tournamentListFragment"
+        android:name="pdm.application.ui.tournaments.TournamentListFragment"
+        android:label="Tournaments">
+        <action
+            android:id="@+id/action_list_to_details"
+            app:destination="@id/tournamentDetailsFragment" />
+        <action
+            android:id="@+id/action_list_to_edit"
+            app:destination="@id/tournamentEditFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/tournamentDetailsFragment"
+        android:name="pdm.application.ui.details.TournamentDetailsFragment"
+        android:label="Tournament Details">
+        <argument
+            android:name="tournamentId"
+            app:argType="long" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/tournamentEditFragment"
+        android:name="pdm.application.ui.edit.TournamentEditFragment"
+        android:label="Edit Tournament">
+        <argument
+            android:name="tournamentId"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="tournament"
+            app:argType="pdm.application.model.Tournament"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
+
+</navigation>
