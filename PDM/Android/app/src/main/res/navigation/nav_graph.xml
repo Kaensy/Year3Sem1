@@ -25,6 +25,11 @@
         <action
             android:id="@+id/action_list_to_edit"
             app:destination="@id/tournamentEditFragment" />
+        <action
+            android:id="@+id/actionTournamentListToLogin"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -50,6 +55,18 @@
             app:argType="pdm.application.model.Tournament"
             app:nullable="true"
             android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_edit_to_selectLocation"
+            app:destination="@id/selectLocationFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/selectLocationFragment"
+        android:name="pdm.application.ui.map.SelectLocationFragment"
+        android:label="Select Location">
+        <action
+            android:id="@+id/action_selectLocation_to_edit"
+            app:destination="@id/tournamentEditFragment" />
     </fragment>
 
 </navigation>

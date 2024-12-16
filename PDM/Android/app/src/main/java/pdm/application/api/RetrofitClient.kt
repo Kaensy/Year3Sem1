@@ -7,6 +7,7 @@ import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
+import pdm.application.util.NetworkUtil
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.net.SocketTimeoutException
@@ -45,13 +46,5 @@ object RetrofitClient {
 
     val apiService: ApiService = retrofit.create(ApiService::class.java)
 
-    fun isNetworkAvailable(context: Context): Boolean {
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val network = connectivityManager.activeNetwork
-        val capabilities = connectivityManager.getNetworkCapabilities(network)
-        return capabilities != null && (
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
-                        capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
-                )
-    }
+    fun isNetworkAvailable(context: Context): Boolean = NetworkUtil.isNetworkAvailable(context)
 }

@@ -23,22 +23,10 @@ class TournamentEditViewModel(application: Application) : AndroidViewModel(appli
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> = _error
 
-    private var editingTournamentId: String? = null
-
-    private var startDate: Date = Date()
-    private var endDate: Date = Date(System.currentTimeMillis() + 7 * 24 * 60 * 60 * 1000)
-
-    fun setStartDate(date: Date) {
-        startDate = date
-    }
-
-    fun setEndDate(date: Date) {
-        endDate = date
-    }
 
     init {
         val sessionManager = SessionManager(application)
-        repository = TournamentRepository(sessionManager)
+        repository = TournamentRepository(application, sessionManager)
     }
 
     fun loadTournament(tournamentId: String) {
@@ -46,7 +34,6 @@ class TournamentEditViewModel(application: Application) : AndroidViewModel(appli
             try {
                 repository.getTournamentById(tournamentId)
                     .onSuccess { tournament ->
-                        editingTournamentId = tournamentId
                         _tournament.value = tournament
                     }
                     .onFailure { exception ->
@@ -58,43 +45,56 @@ class TournamentEditViewModel(application: Application) : AndroidViewModel(appli
         }
     }
 
-    fun saveTournament(
+    fun saveTournament(tournament: Tournament) {
+        viewModelScope.launch {
+            try {
+                repository.updateTournament(tournament.id, tournament)
+                    .onSuccess {
+                        _saveResult.value = true
+                    }
+                    .onFailure { exception ->
+                        _error.value = exception.message
+                    }
+            } catch (e: Exception) {
+                _error.value = e.message
+            }
+        }
+    }
+
+    fun createTournament(
         name: String,
         description: String,
         participantsCount: Int,
         prizePool: Double,
         isRegistrationOpen: Boolean,
-        id: String? = null,  // Optional parameter for editing
-        startDate: Date? = null,
-        endDate: Date? = null
+        startDate: Date,
+        endDate: Date,
+        latitude: Double?,
+        longitude: Double?,
+        status: TournamentStatus,
+        winner: String?
     ) {
         viewModelScope.launch {
             try {
                 val tournament = Tournament(
-                    id = id ?: "",
+                    id = "",
                     name = name,
                     description = description,
-                    startDate = startDate ?: Date(),
-                    endDate = endDate ?: Date(System.currentTimeMillis() + 7 * 24 * 60 * 60 * 1000),
+                    startDate = startDate,
+                    endDate = endDate,
                     participantsCount = participantsCount,
                     prizePool = prizePool,
                     isRegistrationOpen = isRegistrationOpen,
-                    winner = null,
-                    status = TournamentStatus.UPCOMING,
-                    userId = ""
+                    winner = winner,
+                    status = status,
+                    userId = "",
+                    latitude = latitude,
+                    longitude = longitude
                 )
 
-                val result = if (id != null) {
-                    repository.updateTournament(id, tournament)
-                } else {
-                    repository.createTournament(tournament)
-                }
-
-                result.onSuccess {
-                    _saveResult.value = true
-                }.onFailure { exception ->
-                    _error.value = exception.message
-                }
+                repository.createTournament(tournament)
+                    .onSuccess { _saveResult.value = true }
+                    .onFailure { exception -> _error.value = exception.message }
             } catch (e: Exception) {
                 _error.value = e.message
             }

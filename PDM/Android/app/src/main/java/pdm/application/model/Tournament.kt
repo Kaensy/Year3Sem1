@@ -17,32 +17,10 @@ data class Tournament(
     val isRegistrationOpen: Boolean,
     val winner: String?,
     val status: TournamentStatus,
-    val userId: String
-) : Parcelable {
-    companion object {
-        val CREATOR = object : Parcelable.Creator<Tournament> {
-            override fun createFromParcel(source: android.os.Parcel): Tournament {
-                return Tournament(
-                    id = source.readString() ?: "",
-                    name = source.readString() ?: "",
-                    description = source.readString() ?: "",
-                    startDate = Date(source.readLong()),
-                    endDate = Date(source.readLong()),
-                    participantsCount = source.readInt(),
-                    prizePool = source.readDouble(),
-                    isRegistrationOpen = source.readInt() == 1,
-                    winner = source.readString(),
-                    status = TournamentStatus.valueOf(source.readString() ?: TournamentStatus.UPCOMING.name),
-                    userId = source.readString() ?: ""
-                )
-            }
-
-            override fun newArray(size: Int): Array<Tournament?> {
-                return arrayOfNulls(size)
-            }
-        }
-    }
-}
+    val userId: String,
+    val latitude: Double? = null,
+    val longitude: Double? = null
+) : Parcelable {}
 
 @Parcelize
 enum class TournamentStatus : Parcelable {
@@ -52,4 +30,13 @@ enum class TournamentStatus : Parcelable {
     IN_PROGRESS,
     @SerializedName("COMPLETED")
     COMPLETED
+}
+
+fun determineTournamentStatus(startDate: Date, endDate: Date): TournamentStatus {
+    val currentDate = Date()
+    return when {
+        currentDate.before(startDate) -> TournamentStatus.UPCOMING
+        currentDate.after(endDate) -> TournamentStatus.COMPLETED
+        else -> TournamentStatus.IN_PROGRESS
+    }
 }
