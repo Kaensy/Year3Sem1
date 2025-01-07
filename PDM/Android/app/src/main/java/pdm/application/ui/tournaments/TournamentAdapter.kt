@@ -11,8 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 import pdm.application.databinding.ItemTournamentBinding
 import pdm.application.model.Tournament
 import pdm.application.model.TournamentStatus
+import pdm.application.ui.util.bounceIn
+import pdm.application.ui.util.fadeIn
+import pdm.application.ui.util.slideInFromRight
 import java.text.SimpleDateFormat
 import java.util.Locale
+
 
 class TournamentAdapter(
     private val onItemClick: (Tournament) -> Unit,
@@ -100,6 +104,14 @@ class TournamentAdapter(
                 } else {
                     tournamentWinner.visibility = View.GONE
                 }
+                // Add animation to the root view
+                root.slideInFromRight(300 + adapterPosition * 100L) // Staggered animation
+
+                // Add bounce animation to status changes
+                tournamentStatus.bounceIn(500)
+
+                // Add fade animation to registration status
+                registrationStatus.fadeIn(700)
             }
         }
     }

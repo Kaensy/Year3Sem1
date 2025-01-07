@@ -10,16 +10,19 @@ import android.os.Build
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asFlow
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import pdm.application.api.RetrofitClient
 import pdm.application.model.Tournament
 import pdm.application.model.TournamentStatus
 import pdm.application.repository.TournamentRepository
+import pdm.application.util.GyroscopeSensorManager
 import pdm.application.util.NetworkUtil
 import pdm.application.util.SessionManager
 import java.util.Date
@@ -44,6 +47,11 @@ class TournamentListViewModel(application: Application) : AndroidViewModel(appli
     val isConnected: LiveData<Boolean> = _isConnected
 
     private val connectivityManager = application.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+    private val _currentSortingCriteria = MutableStateFlow<GyroscopeSensorManager.SortingCriteria>(
+        GyroscopeSensorManager.SortingCriteria.DATE
+    )
+    private val _isSortAscending = MutableStateFlow(true)
 
     init {
         val sessionManager = SessionManager(application)
@@ -140,5 +148,35 @@ class TournamentListViewModel(application: Application) : AndroidViewModel(appli
                 _error.value = e.message
             }
         }
+    }
+    val sortedTournaments = combine(
+        tournaments.asFlow(),
+        _currentSortingCriteria,
+        _isSortAscending
+    ) { tournaments, criteria, isAscending ->
+        tournaments.sortedWith(getTournamentComparator(criteria, isAscending))
+    }.asLiveData()
+
+    fun updateSorting(criteria: GyroscopeSensorManager.SortingCriteria, isAscending: Boolean) {
+        _currentSortingCriteria.value = criteria
+        _isSortAscending.value = isAscending
+    }
+
+    private fun getTournamentComparator(
+        criteria: GyroscopeSensorManager.SortingCriteria,
+        isAscending: Boolean
+    ): Comparator<Tournament> {
+        val comparator = when (criteria) {
+            GyroscopeSensorManager.SortingCriteria.DATE ->
+                compareBy<Tournament> { it.startDate }
+            GyroscopeSensorManager.SortingCriteria.PRIZE_POOL ->
+                compareBy<Tournament> { it.prizePool }
+            GyroscopeSensorManager.SortingCriteria.PARTICIPANTS ->
+                compareBy<Tournament> { it.participantsCount }
+            GyroscopeSensorManager.SortingCriteria.REGISTRATION_STATUS ->
+                compareBy<Tournament> { it.isRegistrationOpen }
+        }
+
+        return if (isAscending) comparator else comparator.reversed()
     }
 }

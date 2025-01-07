@@ -13,14 +13,25 @@ import java.util.concurrent.TimeUnit
 import java.util.logging.Logger
 import androidx.work.WorkRequest
 import pdm.application.util.NetworkUtil
+import pdm.application.util.LightSensorManager
 
 class TournamentApplication : Application() {
     val database: AppDatabase by lazy { AppDatabase.getDatabase(this) }
+    private lateinit var lightSensorManager: LightSensorManager
 
     override fun onCreate() {
         super.onCreate()
         NetworkUtil.startNetworkMonitoring(this)
         setupPeriodicWorkManager()
+
+        // Initialize and start light sensor
+        lightSensorManager = LightSensorManager(this)
+        lightSensorManager.startListening()
+    }
+
+    override fun onTerminate() {
+        super.onTerminate()
+        lightSensorManager.stopListening()
     }
 
 //    private fun setupPeriodicWorkManager() {

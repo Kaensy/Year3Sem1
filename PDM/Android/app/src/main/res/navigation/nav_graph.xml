@@ -20,11 +20,30 @@
         android:name="pdm.application.ui.tournaments.TournamentListFragment"
         android:label="Tournaments">
         <action
-            android:id="@+id/action_list_to_details"
-            app:destination="@id/tournamentDetailsFragment" />
+            android:id="@+id/action_login_to_tournamentList"
+            app:destination="@id/tournamentListFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+
         <action
             android:id="@+id/action_list_to_edit"
-            app:destination="@id/tournamentEditFragment" />
+            app:destination="@id/tournamentEditFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+
+        <action
+            android:id="@+id/action_edit_to_selectLocation"
+            app:destination="@id/selectLocationFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
         <action
             android:id="@+id/actionTournamentListToLogin"
             app:destination="@id/loginFragment"

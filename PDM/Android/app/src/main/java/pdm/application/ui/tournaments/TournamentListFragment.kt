@@ -33,8 +33,11 @@ import android.icu.util.Calendar
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
+import android.view.animation.OvershootInterpolator
 import android.widget.ImageView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.work.Data
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
@@ -43,19 +46,34 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import pdm.application.model.Tournament
 import pdm.application.model.TournamentStatus
+import pdm.application.ui.util.hideFab
+import pdm.application.ui.util.showFab
 import pdm.application.util.NetworkManager
 import pdm.application.workers.CountdownWorker
 import pdm.application.workers.NotificationWorker
 import pdm.application.workers.TournamentSyncWorker
 import java.util.Date
+import android.content.Context
+import android.hardware.Sensor
+import android.hardware.SensorManager
+import android.view.HapticFeedbackConstants
+import pdm.application.util.GyroscopeSensorManager
+import pdm.application.util.ShakeDetector
 
 class TournamentListFragment : Fragment() {
+    private lateinit var sensorManager: SensorManager
+    private lateinit var shakeDetector: ShakeDetector
+    private var accelerometer: Sensor? = null
+
     private var _binding: FragmentTournamentListBinding? = null
     private val binding get() = _binding!!
     private val viewModel: TournamentListViewModel by viewModels()
     private lateinit var adapter: TournamentAdapter
     private lateinit var sessionManager: SessionManager
     private lateinit var networkManager: NetworkManager
+    private var isFabRotated = false
+    private lateinit var gyroscopeSensorManager: GyroscopeSensorManager
+
 
     private fun setupUiRefresh() {
         lifecycleScope.launch {
@@ -99,6 +117,23 @@ class TournamentListFragment : Fragment() {
         observeViewModel()
         NotificationHelper(requireContext()).requestNotificationPermission(requireActivity())
         setupUiRefresh()
+        setupShakeDetector()
+        setupGyroscope()
+
+        binding.fabAdd.apply {
+            alpha = 0f
+            scaleX = 0.5f
+            scaleY = 0.5f
+            animate()
+                .alpha(1f)
+                .scaleX(1f)
+                .scaleY(1f)
+                .setDuration(500)
+                .setInterpolator(OvershootInterpolator())
+                .start()
+        }
+
+
 
         viewModel.isConnected.observe(viewLifecycleOwner) { isConnected ->
             Snackbar.make(
@@ -197,6 +232,8 @@ class TournamentListFragment : Fragment() {
         binding.testBackgroundTask.setOnClickListener {
             testBackgroundTasks()
         }
+
+
     }
 
     private fun updateNetworkStatus(isAvailable: Boolean) {
@@ -320,7 +357,7 @@ class TournamentListFragment : Fragment() {
     private fun setupRecyclerView() {
         binding.recyclerView.apply {
             setHasFixedSize(true)
-            itemAnimator = null
+            itemAnimator = null  // Change this line to enable animations
             layoutManager = LinearLayoutManager(context)
             adapter = TournamentAdapter(
                 onItemClick = { tournament ->
@@ -338,20 +375,40 @@ class TournamentListFragment : Fragment() {
                     if (mapIntent.resolveActivity(requireActivity().packageManager) != null) {
                         startActivity(mapIntent)
                     } else {
-                        Snackbar.make(
-                            binding.root,
-                            "Google Maps not installed",
-                            Snackbar.LENGTH_SHORT
-                        ).show()
+                        Snackbar.make(binding.root, "Google Maps not installed", Snackbar.LENGTH_SHORT).show()
                     }
                 }
             )
         }
+
+        // Add scroll listener for FAB animation
+        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 0 && binding.fabAdd.isVisible) {
+                    binding.fabAdd.animate()
+                        .alpha(0f)
+                        .scaleX(0.5f)
+                        .scaleY(0.5f)
+                        .setDuration(200)
+                        .withEndAction { binding.fabAdd.visibility = View.GONE }
+                        .start()
+                } else if (dy < 0 && !binding.fabAdd.isVisible) {
+                    binding.fabAdd.visibility = View.VISIBLE
+                    binding.fabAdd.animate()
+                        .alpha(1f)
+                        .scaleX(1f)
+                        .scaleY(1f)
+                        .setDuration(200)
+                        .start()
+                }
+            }
+        })
     }
 
 
     private fun observeViewModel() {
-        viewModel.tournaments.observe(viewLifecycleOwner) { tournaments ->
+        viewModel.sortedTournaments.observe(viewLifecycleOwner) { tournaments ->
             (binding.recyclerView.adapter as? TournamentAdapter)?.submitList(tournaments)
             binding.refreshLayout.isRefreshing = false
         }
@@ -530,5 +587,64 @@ class TournamentListFragment : Fragment() {
             Log.d("TournamentListFragment", "Notification permission granted")
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        gyroscopeSensorManager.startListening()
+        accelerometer?.let {
+            sensorManager.registerListener(
+                shakeDetector,
+                it,
+                SensorManager.SENSOR_DELAY_NORMAL
+            )
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        sensorManager.unregisterListener(shakeDetector)
+        gyroscopeSensorManager.stopListening()
+    }
+
+    private fun setupShakeDetector() {
+        sensorManager = requireContext().getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+
+        shakeDetector = ShakeDetector {
+            // Only refresh if we're not already refreshing
+            if (!binding.refreshLayout.isRefreshing) {
+                binding.refreshLayout.isRefreshing = true
+                viewModel.loadTournaments()
+
+                // Give haptic feedback for the shake
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    activity?.window?.decorView?.performHapticFeedback(
+                        HapticFeedbackConstants.CLOCK_TICK,
+                        HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING
+                    )
+                }
+            }
+        }
+    }
+
+    private fun setupGyroscope() {
+        gyroscopeSensorManager = GyroscopeSensorManager(requireContext()) { criteria, isAscending ->
+            viewModel.updateSorting(criteria, isAscending)
+            // Show a hint about the current sorting
+            val direction = if (isAscending) "ascending" else "descending"
+            val criteriaText = when (criteria) {
+                GyroscopeSensorManager.SortingCriteria.DATE -> "date"
+                GyroscopeSensorManager.SortingCriteria.PRIZE_POOL -> "prize pool"
+                GyroscopeSensorManager.SortingCriteria.PARTICIPANTS -> "participants"
+                GyroscopeSensorManager.SortingCriteria.REGISTRATION_STATUS -> "registration status"
+            }
+            Snackbar.make(
+                binding.root,
+                "Sorting by $criteriaText ($direction)",
+                Snackbar.LENGTH_SHORT
+            ).show()
+        }
+    }
+
 
 }

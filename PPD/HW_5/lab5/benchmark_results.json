@@ -1,0 +1,50 @@
+{
+    "configurations": {
+        "pr4_pw2": {
+            "mean": 71.6,
+            "median": 73,
+            "stdev": 4.39317652729776,
+            "min": 66,
+            "max": 76
+        },
+        "pr4_pw4": {
+            "mean": 20.2,
+            "median": 20,
+            "stdev": 1.0954451150103321,
+            "min": 19,
+            "max": 22
+        },
+        "pr4_pw12": {
+            "mean": 27.8,
+            "median": 27,
+            "stdev": 1.0954451150103321,
+            "min": 27,
+            "max": 29
+        },
+        "pr2_pw2": {
+            "mean": 10,
+            "median": 10,
+            "stdev": 1.0,
+            "min": 9,
+            "max": 11
+        },
+        "pr2_pw4": {
+            "mean": 20,
+            "median": 20,
+            "stdev": 1.5811388300841898,
+            "min": 18,
+            "max": 22
+        },
+        "pr2_pw12": {
+            "mean": 23,
+            "median": 24,
+            "stdev": 1.4142135623730951,
+            "min": 21,
+            "max": 24
+        }
+    },
+    "fastest_config": {
+        "config": "pr2_pw2",
+        "time": 10
+    }
+}
