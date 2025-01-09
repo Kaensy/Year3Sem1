@@ -6,23 +6,36 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * A thread-safe linked list implementation using fine-grained locking.
+ * Uses sentinel nodes (dummy head and tail) and per-node locks for better concurrency.
+ */
 class FineGrainedList {
-    private final Node head;
-    private final Node tail;
+    // Sentinel nodes for simplified list operations
+    private final Node head;  // Dummy head node
+    private final Node tail;  // Dummy tail node
+    // Set of blacklisted contestant IDs (for fraud cases)
     private final Set<Integer> blacklist;
+    // Lock for blacklist modifications
     private final ReentrantLock blacklistLock;
 
+    /**
+     * Initializes the list with sentinel nodes and empty blacklist
+     */
     public FineGrainedList() {
-        // Create sentinel nodes
-        this.head = new Node(); // Dummy head
-        this.tail = new Node(); // Dummy tail
+        this.head = new Node();  // Dummy head
+        this.tail = new Node();  // Dummy tail
         head.next = tail;
         this.blacklist = Collections.synchronizedSet(new HashSet<>());
         this.blacklistLock = new ReentrantLock();
     }
 
+    /**
+     * Inserts or updates a contestant's score in the list
+     * Uses hand-over-hand locking for thread safety
+     */
     public void insert(int id, int score, int country) {
-        // Check blacklist first
+        // First check if contestant is blacklisted
         if (blacklist.contains(id)) {
             return;
         }
@@ -39,23 +52,23 @@ class FineGrainedList {
             return;
         }
 
-        // Find existing contestant or insertion point
+        // Hand-over-hand locking for traversing and modifying the list
         Node pred = head;
         pred.lock();
         Node curr = pred.next;
         curr.lock();
 
         try {
-            // Search for the contestant or the insertion point
             boolean found = false;
+            // Search for existing contestant or insertion point
             while (curr != tail) {
                 if (curr.data != null && curr.data.getId() == id) {
-                    // Update existing contestant
+                    // Update existing contestant's score
                     curr.data.addScore(score);
                     found = true;
                     break;
                 }
-                // Move to next nodes
+                // Move forward, maintaining hand-over-hand locking
                 Node next = curr.next;
                 pred.unlock();
                 pred = curr;
@@ -71,11 +84,15 @@ class FineGrainedList {
                 pred.next = newNode;
             }
         } finally {
+            // Always unlock held locks
             curr.unlock();
             pred.unlock();
         }
     }
 
+    /**
+     * Removes a contestant from the list using hand-over-hand locking
+     */
     private void removeContestant(int id) {
         Node pred = head;
         pred.lock();
@@ -85,10 +102,11 @@ class FineGrainedList {
         try {
             while (curr != tail) {
                 if (curr.data != null && curr.data.getId() == id) {
-                    // Remove the node
+                    // Remove the node by updating references
                     pred.next = curr.next;
                     return;
                 }
+                // Move forward with hand-over-hand locking
                 Node next = curr.next;
                 pred.unlock();
                 pred = curr;
@@ -101,7 +119,10 @@ class FineGrainedList {
         }
     }
 
-    // Method to sort the list at the end
+    /**
+     * Sorts the list at the end (after all modifications are done)
+     * Requires exclusive access to the entire list
+     */
     public void sortList() {
         // Convert to array, sort, and rebuild list
         java.util.List<ScoreEntry> entries = new java.util.ArrayList<>();
@@ -123,14 +144,13 @@ class FineGrainedList {
         // Sort entries by score (descending)
         entries.sort((a, b) -> Integer.compare(b.getScore(), a.getScore()));
 
-        // Rebuild the list
+        // Rebuild the sorted list
         head.lock();
         try {
-            // Clear the list except sentinels
             Node current = head;
             current.next = tail;
 
-            // Rebuild with sorted entries
+            // Insert sorted entries back into the list
             for (ScoreEntry entry : entries) {
                 Node newNode = new Node(entry);
                 newNode.next = current.next;
@@ -142,6 +162,9 @@ class FineGrainedList {
         }
     }
 
+    /**
+     * Saves the current state of the list to a file
+     */
     public void saveToFile(String filename) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
             head.lock();
