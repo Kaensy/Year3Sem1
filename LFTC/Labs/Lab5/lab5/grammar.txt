@@ -1,0 +1,8 @@
+# Format: NonTerminal -> Production | Production
+# Use ε for epsilon/empty production
+# Terminals are lowercase, non-terminals are uppercase
+E -> T E'
+E' -> + T E' | epsilon
+T -> F T'
+T' -> * F T' | epsilon
+F -> ( E ) | id

@@ -1,0 +1,36 @@
+# Program 1: Circle area and perimeter
+int main() {
+    double radius, area, perimeter;
+    cin >> radius;
+    area = radius * radius * 3.14;
+    perimeter = 2 * 3.14 * radius;
+    cout << area;
+    cout << perimeter;
+}
+
+# Program 2: GCD of two numbers
+int main() {
+    int a, b, temp;
+    cin >> a;
+    cin >> b;
+    while (b != 0) {
+        temp = b;
+        b = a - (a / b) * b;
+        a = temp;
+    }
+    cout << a;
+}
+
+# Program 3: Sum of n numbers
+int main() {
+    int n, sum, i, num;
+    sum = 0;
+    cin >> n;
+    i = 0;
+    while (i < n) {
+        cin >> num;
+        sum = sum + num;
+        i = i + 1;
+    }
+    cout << sum;
+}

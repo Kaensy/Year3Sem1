@@ -1,0 +1,41 @@
+# Program structure
+Program -> int main ( ) { DeclarationsOpt InstructionsOpt }
+
+# Declarations
+DeclarationsOpt -> Declaration DeclarationsRest | epsilon
+DeclarationsRest -> Declaration DeclarationsRest | epsilon
+Declaration -> Type id IdListTail ;
+IdListTail -> , id IdListTail | epsilon
+
+# Instructions
+InstructionsOpt -> InstructionList | epsilon
+InstructionList -> Instruction InstructionListTail
+InstructionListTail -> ; InstructionList | epsilon
+
+# Instructions types
+Instruction -> SimpleInstruction | ControlStmt
+SimpleInstruction -> Assignment | ReadStmt | WriteStmt
+
+# Basic instructions
+Assignment -> id = Expression
+ReadStmt -> cin >> id
+WriteStmt -> cout << Expression
+
+# Control structures
+ControlStmt -> if IfBlock | while WhileBlock
+IfBlock -> ( Condition ) { InstructionsOpt }
+WhileBlock -> ( Condition ) { InstructionsOpt }
+Condition -> Expression RelOp Expression
+
+# Expressions
+Expression -> Term ExpressionTail
+ExpressionTail -> + Term ExpressionTail | - Term ExpressionTail | epsilon
+Term -> Factor TermTail
+TermTail -> * Factor TermTail | / Factor TermTail | epsilon
+Factor -> ( Expression ) | id | number
+
+# Operators
+RelOp -> < | <= | == | != | >= | >
+
+# Types
+Type -> int | double
